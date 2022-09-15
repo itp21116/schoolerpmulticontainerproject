@@ -40,7 +40,7 @@ Launch app only with docker compose [ NOT THIS repository ]
 
 Launch app with kubernetes
 
-Clone repository from https://github.com/itp21116/schoolerpmulticontainerproject
+Clone repository from https://github.com/itp21116/schoolerpmulticontainerproject.git
 
 Inside the same directory insert the following commands:
 	
