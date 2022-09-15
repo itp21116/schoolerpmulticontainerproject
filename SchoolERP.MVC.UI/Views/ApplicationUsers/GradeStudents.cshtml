@@ -1,0 +1,58 @@
+﻿@model IList<SchoolERP.MVC.UI.ViewModels.StudentCourseVM>
+
+@{
+    ViewData["Title"] = "GetCourses";
+    //Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<h1>Grade Student</h1>
+
+
+<form asp-action="InsertGrades" method="post" enctype="multipart/form-data" data>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    CourseName @*@Html.DisplayNameFor(model => model.CourseName)*@
+                </th>
+                <th>
+                    Grade @*@Html.DisplayNameFor(model => model.Grade)*@
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                for (var i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => Model[i].CourseName)
+                            @Html.HiddenFor(m => Model[i].CourseName)
+                            @Html.HiddenFor(m => Model[i].StudentId)
+                        </td>
+                        @if (Model[i].Grade == 0)
+                        {
+                            <td>
+                                @Html.DropDownListFor(m => Model[i].Grade, Enumerable.Range(1, 10).Select(j => new SelectListItem { Text = j.ToString(), Value = j.ToString() }))
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(m => Model[i].Grade)
+                                @Html.HiddenFor(m => Model[i].Grade)
+                            </td>
+                        }
+
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <div class="form-group">
+        <input type="submit" value="Save Grades" class="btn btn-primary" />
+        <a asp-action="Index">Back to List</a>
+    </div>
+</form>

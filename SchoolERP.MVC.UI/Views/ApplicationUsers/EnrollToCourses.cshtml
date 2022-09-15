@@ -1,0 +1,61 @@
+﻿@model IList<SchoolERP.MVC.UI.ViewModels.SelectedCoursesVM>
+
+@{
+    ViewData["Title"] = "Enroll";
+}
+
+
+<h1>CourseEnrollment</h1>
+@*@using (Html.BeginForm("UpdateEnrollments", "ApplicationUsersController", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{*@
+<form asp-action="UpdateEnrollments" method="post" enctype="multipart/form-data" data>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    CourseName @*@Html.DisplayNameFor(model => model.CourseName)*@
+                </th>
+                <th>
+                    Enrolled @*@Html.DisplayNameFor(model => model.IsSelected)
+                    *@
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                for (var i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => Model[i].CourseName)
+                            @Html.HiddenFor(m => Model[i].CourseName)
+                            @Html.HiddenFor(m => Model[i].SelectedCourseCourseId)
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(m => Model[i].IsSelected)
+                        </td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+    <div class="form-group">
+        @*        <button class="btn btn-danger">@Html.ActionLink("Vasket", "UpdateEnrollments", "ApplicationUsersController", null, null)</button>
+        *@        <input type="submit" value="Update Enrollments" class="btn btn-primary" />
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
