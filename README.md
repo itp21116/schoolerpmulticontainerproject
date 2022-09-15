@@ -50,7 +50,9 @@ Inside the same directory insert the following commands:
 	4.kubectl apply -f school.yaml
 	5.kubectl apply -f students.yaml
 	6.kubectl apply -f courses.yaml
-	7.kubectl port-forward schoolerp-mvc-ui-6f99c9849-89zhf 8002:8002
+	7.kubectl port-forward <schoolerp-mvc-ui po name> 30000:80
+	
+	Open a browser http://127.0.0.1:30000/
 
 #Testing accounts
 
