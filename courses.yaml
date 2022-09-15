@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    service: courses-services
+  name: courses-services
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: courses-services
+  template:
+    metadata:
+      labels:
+        service: courses-services
+    spec:
+      containers:
+      - image: 'ghcr.io/itp21116/coursesservices:latest'
+        name: courses-services
+        ports: 
+        - containerPort: 80
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: courses-services-clip
+spec:
+  type: ClusterIP
+  selector:
+    service: courses-services
+  ports:
+    - port: 80
+      targetPort: 80

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    service: students-services
+  name: students-services
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: students-services
+  template:
+    metadata:
+      labels:
+        service: students-services
+    spec:
+      containers:
+      - image: 'ghcr.io/itp21116/studentsservices:latest'
+        name: students-services
+        ports: 
+        - containerPort: 80
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: students-services-clip
+spec:
+  type: ClusterIP
+  selector:
+    service: students-services
+  ports:
+    - port: 80
+      targetPort: 80

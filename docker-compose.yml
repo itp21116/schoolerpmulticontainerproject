@@ -1,0 +1,67 @@
+version: '3.4'
+
+services:
+  schoolerp.mvc.ui:
+    image: ${DOCKER_REGISTRY-}schoolerpmvcui
+    build:
+      context: .
+      dockerfile: SchoolERP.MVC.UI/Dockerfile
+    depends_on:
+        - ms-sql-server
+    expose:
+        - "8002" 
+    ports:
+        - "8002:443"
+    networks:
+        my-school-network-version2:
+
+  ms-sql-server:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "2Secure*Password2"
+      MSSQL_PID: Express
+    ports:
+      - "1433:1433"
+    volumes:
+        ##- school-vol2:C:\Users\vasil\source\repos\SchoolERPMultiContainerProject\Data
+        - school-vol2:/C/Users/vasil/source/repos/SchoolERPMultiContainerProject/Data
+    networks:
+       my-school-network-version2:
+
+
+  students.services:
+    image: ${DOCKER_REGISTRY-}studentsservices
+    build:
+      context: .
+      dockerfile: Students.Services/Dockerfile
+    expose:
+        - "8001" 
+    ports:
+        - "8001:443"
+    networks:
+       my-school-network-version2:
+
+  courses.services:
+    image: ${DOCKER_REGISTRY-}coursesservices
+    build:
+      context: .
+      dockerfile: Courses.Services/Dockerfile
+    expose:
+        - "8003" 
+    ports:
+        - "8003:443"
+    networks:
+       my-school-network-version2:
+
+
+networks:
+  my-school-network-version2:
+    external: true
+
+volumes:
+  school-vol2:
+  
+  
+  
+

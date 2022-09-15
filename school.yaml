@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    service: schoolerp-mvc-ui
+  name: schoolerp-mvc-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: schoolerp-mvc-ui
+  template:
+    metadata:
+      labels:
+        service: schoolerp-mvc-ui
+    spec:
+      containers:
+      - image: 'ghcr.io/itp21116/schoolerpmvcui:latest'
+        name: schoolerp-mvc-ui
+        ports: 
+        - containerPort: 80
+          protocol: TCP 
+        env:
+        - name: ASPNETCORE_URLS
+          value: http://+:80
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: schoolerp-mvc-ui-clip
+spec:
+  type: NodePort
+  selector:
+    service: schoolerp-mvc-ui
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+      name: schoolerp-mvc-ui
+      nodePort: 30000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: schoolerp-mvc-ui-ingress
+spec:
+  tls:
+  rules:
+  - host: 
+    http:
+      paths:
+      - path: /Courses
+        pathType: Prefix
+        backend:
+          service:        
+            name: courses-services-clip 
+            port: 
+             number: 80
+      - path: /ApplicationUsers
+        pathType: Prefix
+        backend:
+          service:        
+            name: students-services-clip 
+            port: 
+             number: 80             
